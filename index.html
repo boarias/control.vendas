@@ -23,32 +23,32 @@
 </style>
 </head>
 <body>
-<!-- Conteúdo omitido por brevidade -->
+<!-- conteúdo omitido para manter o exemplo curto -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-function exportarExcel() {
-  if (typeof XLSX === 'undefined') {
-    alert('Biblioteca Excel não carregada corretamente.');
-    return;
+  function exportarExcel() {
+    if (typeof XLSX === 'undefined') {
+      alert('Biblioteca Excel não carregada corretamente.');
+      return;
+    }
+    const wb = XLSX.utils.book_new();
+    const dados = [["Data", "Localizador", "Titular", "Valor Wallet", "Deságio", "Lucro Final", "Emissor", "Status"]];
+    vendas.forEach(v => {
+      dados.push([
+        v.data || '',
+        v.localizador || '',
+        v.titular || '',
+        (v.valorWallet || 0).toFixed(2),
+        (v.desagio || 0).toFixed(2),
+        (v.lucro || 0).toFixed(2),
+        v.emissor || '',
+        v.status || 'Ativo'
+      ]);
+    });
+    const ws = XLSX.utils.aoa_to_sheet(dados);
+    XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+    XLSX.writeFile(wb, "relatorio_vendas.xlsx");
   }
-  const wb = XLSX.utils.book_new();
-  const dados = [["Data", "Localizador", "Titular", "Valor Wallet", "Deságio", "Lucro Final", "Emissor", "Status"]];
-  vendas.forEach(v => {
-    dados.push([
-      v.data || '',
-      v.localizador || '',
-      v.titular || '',
-      (v.valorWallet || 0).toFixed(2),
-      (v.desagio || 0).toFixed(2),
-      (v.lucro || 0).toFixed(2),
-      v.emissor || '',
-      v.status || 'Ativo'
-    ]);
-  });
-  const ws = XLSX.utils.aoa_to_sheet(dados);
-  XLSX.utils.book_append_sheet(wb, ws, "Relatório");
-  XLSX.writeFile(wb, "relatorio_vendas.xlsx");
-}
 </script>
 </body>
 </html>
